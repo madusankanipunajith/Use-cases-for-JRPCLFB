@@ -22,7 +22,9 @@ public function main() {
 
     emp.getSalary("Jones", "Welsh");
 
-    cl.close();
+    cl.close(function (){
+        io:println("Closed the client...");
+    });
 }
 
 class Employ{

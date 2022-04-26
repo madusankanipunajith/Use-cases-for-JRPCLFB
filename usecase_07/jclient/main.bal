@@ -16,7 +16,11 @@ public function main() {
     emp.getLeader();
     emp.getNames();
 
-    cl.close();
+    cl.close(function (){
+        io:println("Client has been closed successfully");
+    });
+
+    io:println("Async client");
 }
 
 class Employ{
@@ -27,6 +31,7 @@ class Employ{
     }
 
     public function getLeader() {
+        io:println("B");
         self.clientService.sendRequest("lead",(), function (types:Response|types:Error? response){
             if response is types:Response{
                 io:println("Leader is ", response.result);
@@ -45,6 +50,7 @@ class Employ{
     }
 
     public function getLastName(string[] fnames) {
+        io:println("A");
         types:BatchInput[] input = [];
         foreach var item in fnames {
             input.push({method: "last", params: {first: item, last: ""}});
@@ -60,6 +66,7 @@ class Employ{
     }
 
     public function getNames() {
+        io:println("C");
         self.clientService.sendRequest("list_fnames",(), function (types:Response|types:Error? response){
             if response is types:Response{
                 io:println("Names ", response.result);
